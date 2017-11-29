@@ -32,7 +32,7 @@ public abstract class GameMap {
      * @param row
      * @return
      */
-    public abstract TileType getTileTypeByCoordinate(int layer, float col, float row);
+    public abstract TileType getTileTypeByCoordinate(int layer, int col, int row);
 
     public abstract int getWidth();
     public abstract int getHeight();

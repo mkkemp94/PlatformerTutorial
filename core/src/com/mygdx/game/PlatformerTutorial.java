@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.world.GameMap;
+import com.mygdx.game.world.TileType;
 import com.mygdx.game.world.TiledGameMap;
 
 public class PlatformerTutorial extends ApplicationAdapter {
@@ -39,6 +41,19 @@ public class PlatformerTutorial extends ApplicationAdapter {
 		if (Gdx.input.isTouched()) {
 			camera.translate(-Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
 			camera.update();
+		}
+
+		if (Gdx.input.justTouched()) {
+			Vector3 position = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			TileType tileType = gameMap.getTileTypeByLocation(1, position.x, position.y);
+
+			if (tileType != null) {
+				System.out.println("You clicked on tile with id " +
+								tileType.getId() + " " +
+								tileType.getName() + " " +
+								tileType.isCollidable() + " " +
+								tileType.getDamage());
+			}
 		}
 
 		gameMap.render(camera);
