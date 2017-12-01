@@ -17,27 +17,29 @@ public class CustomGameMap extends GameMap {
     private String name;
     private int[][][] map;
 
-    private SpriteBatch batch;
     private TextureRegion[][] tiles;
 
     public CustomGameMap() {
         CustomGameMapData data = CustomGameMapLoader.loadMap("basic", "My grass lands");
-        this.id = id;
-        this.name = name;
+        this.id = data.id;
+        this.name = data.name;
         this.map = data.map;
 
-        batch = new SpriteBatch();
-        tiles = TextureRegion.split(new Texture("tiles.png"), TileType.TILE_SIZE, TileType.TILE_SIZE);
+        tiles = TextureRegion.split(
+                new Texture("tiles.png"),
+                TileType.TILE_SIZE,
+                TileType.TILE_SIZE
+        );
     }
 
     @Override
-    public void render(OrthographicCamera camera) {
+    public void render(OrthographicCamera camera, SpriteBatch batch) {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (int layer = 0; layer < getLayers(); layer++) {
             for (int row = 0; row < getHeight(); row++) {
                 for (int col = 0; col < getWidth(); col++) {
-                    TileType type = this.getTileTypeByLocation(layer, col, row);
+                    TileType type = this.getTileTypeByCoordinate(layer, col, row);
                     if (type != null) {
                         batch.draw(
                                 tiles[0][type.getId() - 1],
@@ -48,6 +50,10 @@ public class CustomGameMap extends GameMap {
                 }
             }
         }
+
+        // Render entities
+        super.render(camera, batch);
+
         batch.end();
     }
 
@@ -57,9 +63,7 @@ public class CustomGameMap extends GameMap {
     }
 
     @Override
-    public void dispose() {
-        batch.dispose();
-    }
+    public void dispose() { }
 
     @Override
     public TileType getTileTypeByLocation(int layer, float x, float y) {

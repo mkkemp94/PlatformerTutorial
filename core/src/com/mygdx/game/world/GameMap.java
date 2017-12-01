@@ -1,6 +1,7 @@
 package com.mygdx.game.world;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import static com.mygdx.game.world.TileType.TILE_SIZE;
 
@@ -10,8 +11,18 @@ import static com.mygdx.game.world.TileType.TILE_SIZE;
 
 public abstract class GameMap {
 
-    public abstract void render(OrthographicCamera camera);
-    public abstract void update(float delta);
+    public GameMap() {
+
+    }
+
+    public void render(OrthographicCamera camera, SpriteBatch batch) {
+
+    }
+
+    public void update(float delta) {
+
+    }
+
     public abstract void dispose();
 
     /**
