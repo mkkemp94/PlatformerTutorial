@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.cutomgamemap.CustomGameMap;
 import com.mygdx.game.world.GameMap;
 import com.mygdx.game.world.TileType;
-import com.mygdx.game.world.TiledGameMap;
 
 public class PlatformerTutorial extends ApplicationAdapter {
 
@@ -30,7 +30,7 @@ public class PlatformerTutorial extends ApplicationAdapter {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
 
-		gameMap = new TiledGameMap();
+		gameMap = new CustomGameMap();
 	}
 
 	@Override
