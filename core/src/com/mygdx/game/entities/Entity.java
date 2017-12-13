@@ -17,21 +17,39 @@ public abstract class Entity {
     protected boolean grounded = false;
 
 
-    public Entity(float x, float y, EntityType type, GameMap map, boolean grounded) {
+    public Entity(float x, float y, EntityType type, GameMap map) {
         this.pos = new Vector2(x, y);
         this.type = type;
         this.map = map;
-        this.grounded = grounded;
     }
 
+    // Jump
     public void update(float dt, float gravity) {
+        float newY = pos.y;
 
+        this.velocityY += gravity * dt * getWeight();
+        newY += this.velocityY * dt;
+
+        if (map.doesRectCollideWithMap(pos.x, newY, getWidth(), getHeight())) {
+            if (velocityY < 0) {
+                this.pos.y = (float) Math.floor(pos.y);
+                grounded = true;
+            }
+            this.velocityY = 0;
+        } else {
+            this.pos.y = newY;
+            grounded = false;
+        }
     }
 
     public abstract void render(SpriteBatch batch);
 
+    // Only move if we can move.
     protected void moveX(float amount) {
-
+        float newX = pos.x + amount;
+        if (!map.doesRectCollideWithMap(newX, pos.y, getWidth(), getHeight())) {
+            this.pos.x = newX;
+        }
     }
 
     public Vector2 getPos() {
